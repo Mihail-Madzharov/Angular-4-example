@@ -11,6 +11,7 @@ import { MainAppModule } from './main-app/main-app.module';
 import { MainAppComponent } from './main-app/main-app.component';
 import { Observable } from 'rxjs/Observable';
 import { PreloadedService } from './preloaded-service';
+import { AuthGuard } from './components/resolvers-guards/guards/auth-guard';
 
 
 export class CustomPreload implements PreloadingStrategy {
@@ -32,7 +33,7 @@ export const ROUTES: Routes = [
     HeaderComponent,
     CustomPipePipe
   ],
-  providers: [CustomPreload],
+  providers: [CustomPreload, AuthGuard],
   imports: [
     BrowserModule,
     // if you want to preload everything use PreloadAllModules

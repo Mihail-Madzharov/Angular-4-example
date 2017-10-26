@@ -8,17 +8,23 @@ import { ContentChildComponent } from '../components/view-content-child/content-
 import { ViewChildComponent } from '../components/view-content-child/view-child/view-child.component';
 import { IdResolver } from '../components/resolvers-guards/resolvers/id-resolver';
 import { PreloadedService } from '../preloaded-service';
+import { AuthGuard } from '../components/resolvers-guards/guards/auth-guard';
 
 const ROUTES: Routes = [
-    { path: '', component: MainAppComponent },
     {
-        path: "child", component: ParentComponent
-    },
-    {
-        path: "resolver/:id", component: ResolverComponent,
-        resolve: {
-            id: IdResolver
-        }
+        path: '',
+        component: MainAppComponent,
+        canActivateChild: [AuthGuard],
+        children: [
+            {
+                path: "child", component: ParentComponent
+            },
+            {
+                path: "resolver/:id", component: ResolverComponent,
+                resolve: {
+                    id: IdResolver
+                }
+            }]
     }]
 @NgModule({
     imports: [
@@ -31,7 +37,7 @@ const ROUTES: Routes = [
         ContentChildComponent
     ],
     providers: [
-        IdResolver
+        IdResolver,
     ],
     exports: [MainAppComponent]
 
